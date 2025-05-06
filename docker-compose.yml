@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  testing_mysql:
+    container_name: testing_mysql
+    image: mysql:8.0.13
+    ports:
+      - 3306:3307
+    environment:
+      MYSQL_ROOT_PASSWORD: 0387092630Linh
+    volumes:
+      - ./init_db:/docker-entrypoint-initdb.d:ro
+      - ./mysql_data:/var/lib/mysql
+
+  api:
+    build:
+      context: .
+    container_name: api
+    ports:
+      - 9000:8000
+    depends_on:
+      - testing_mysql
